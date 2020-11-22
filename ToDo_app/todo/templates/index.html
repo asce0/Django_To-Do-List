@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block body %}
+    <div class="container">
+            <div class="jumbotron">
+              {% if messages %}
+                {% for message in messages%}
+                    <div class="alert alert-primary alert-dismissable" role="alert">
+                        <button class="close" data-dismiss="alert">
+                            <small><sup>x</sup></small>
+                        </button>
+                        {{ message }}
+                    </div>
+                {% endfor %}
+              {% endif %}
+              <h1>Tasks:</h1>
+              {% if all_items %}
+              <table class="table table-bordered">
+                    {% for Item in all_items %}
+                        {% if Item.completed %}
+                            <tr class="table-success">
+                                <td class="striker">{{ Item.item }}</td>
+                                <td><center><a href="{% url 'uncross_off' Item.id %}">Uncross</a></center></td>
+                                <td><center><a href="{% url 'delete' Item.id %}">Delete</a></center></td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td>{{ Item.item }}</td>
+                                <td><center><a href="{% url 'cross_off' Item.id %}">Cross Off</a></center></td>
+                                <td><center><a href="{% url 'delete' Item.id %}">Delete</a></center></td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+              </table>
+              {% endif %}
+            </div>
+{% endblock %}
